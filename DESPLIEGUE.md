@@ -1,5 +1,11 @@
 # Publicar Inmigranteate gratis (Cloudflare Pages)
 
+> **Estado (22/11/2026):** la web está publicada en https://inmigranteate.pages.dev y el código en
+> https://github.com/dangkid/inmigranteate. Para **actualizarla** tras cambiar contenido o código:
+> `powershell -ExecutionPolicy Bypass -File scripts/publicar.ps1` (pasa los tests, construye y sube).
+> Para que se publique sola con cada `git push`, conecta el repositorio en Cloudflare (Pasos 2 y 3 de abajo);
+> hasta entonces la publicación es manual con ese script.
+
 La web es **100 % estática**: no necesita servidor ni base de datos. Por eso se puede alojar gratis,
 con HTTPS, ancho de banda ilimitado y servidores repartidos por todo el mundo.
 
