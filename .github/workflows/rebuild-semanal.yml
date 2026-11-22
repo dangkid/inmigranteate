@@ -1,0 +1,19 @@
+name: Reconstruir web (semanal)
+
+# Recalcula en el build los avisos de "revisión vencida" sin necesidad de hacer commits.
+# Requiere el secreto CF_DEPLOY_HOOK (URL del Deploy Hook de Cloudflare Pages). Ver DESPLIEGUE.md.
+on:
+  schedule:
+    - cron: "30 7 * * 1"
+  workflow_dispatch:
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Lanzar despliegue en Cloudflare Pages
+        env:
+          HOOK: ${{ secrets.CF_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then echo "CF_DEPLOY_HOOK no configurado; nada que hacer."; exit 0; fi
+          curl -fsS -X POST "$HOOK"
