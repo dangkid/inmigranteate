@@ -7,11 +7,16 @@ export function Footer({ locale, t }: { locale: Locale; t: Messages }) {
   return (
     <footer className="site-footer">
       <div className="container">
-        <p>
-          <strong>Inmigranteate</strong> — {t.meta.tagline}. {t.disclaimer.titulo}
+        <p className="footer-brand">Inmigranteate</p>
+        <p style={{ maxWidth: "40rem" }}>
+          {t.meta.tagline}. <strong>{t.disclaimer.titulo}</strong> Proyecto abierto, gratuito y sin ánimo de lucro.
+          No gestionamos citas ni cobramos por ningún trámite.
         </p>
         <nav aria-label="Pie de página">
           <ul>
+            <li><Link href={`/${locale}/tramites`}>{t.nav.tramites}</Link></li>
+            <li><Link href={`/${locale}/ayuda`}>{t.nav.ayuda}</Link></li>
+            <li><Link href={`/${locale}/estafas`}>{t.nav.estafas}</Link></li>
             <li><Link href={`/${locale}/novedades`}>{t.nav.novedades}</Link></li>
             <li><Link href={`/${locale}/reportar`}>{t.nav.reportar}</Link></li>
             <li><Link href={`/${locale}/sobre`}>{t.nav.sobre}</Link></li>
@@ -30,9 +35,7 @@ export function Footer({ locale, t }: { locale: Locale; t: Messages }) {
             </span>
           ))}
         </p>
-        <p className="small">
-          Sin registro, sin cookies de seguimiento y sin guardar tus datos. Nunca vendemos ni gestionamos citas.
-        </p>
+        <p className="small">Sin registro, sin cookies de seguimiento y sin guardar tus datos.</p>
       </div>
     </footer>
   );

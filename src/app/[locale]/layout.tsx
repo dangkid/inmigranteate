@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
+import "@fontsource-variable/inter";
+import "@fontsource-variable/fraunces";
 import "../globals.css";
 import { ENABLED_LOCALES, getDir, isLocale } from "@/i18n/config";
 import { getMessages } from "@/i18n/messages";
@@ -49,14 +51,14 @@ export default async function LocaleLayout({
   const t = getMessages(locale);
   const base = `/${locale}`;
   const nav = [
-    { href: `${base}/asistente`, label: t.nav.asistente },
     { href: `${base}/tramites`, label: t.nav.tramites },
     { href: `${base}/calculadoras`, label: t.nav.calculadoras },
-    { href: `${base}/buscar`, label: t.nav.buscar },
     { href: `${base}/glosario`, label: t.nav.glosario },
     { href: `${base}/ayuda`, label: t.nav.ayuda },
     { href: `${base}/estafas`, label: t.nav.estafas },
     { href: `${base}/novedades`, label: t.nav.novedades },
+    { href: `${base}/buscar`, label: t.nav.buscar },
+    { href: `${base}/asistente`, label: t.nav.asistente, cta: true },
   ];
 
   return (

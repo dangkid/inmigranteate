@@ -9,6 +9,7 @@ import { DIAS_REVISION } from "@/lib/site";
 import { diasDesde, formatFecha } from "@/lib/formato";
 import { Checklist, type ChecklistItem } from "./Checklist";
 import { Disclaimer } from "./Disclaimer";
+import { Icon } from "./Icon";
 
 type Ctx = { t: Messages; numFuente: Map<string, number> };
 
@@ -55,9 +56,9 @@ function ItemBody({ it, ctx, extra }: { it: Item; ctx: Ctx; extra?: ReactNode })
   );
 }
 
-function Lista({ items, ctx }: { items: Item[]; ctx: Ctx }) {
+function Lista({ items, ctx, className }: { items: Item[]; ctx: Ctx; className?: string }) {
   return (
-    <ul>
+    <ul className={className}>
       {items.map((it, i) => (
         <li key={i}>
           <ItemBody it={it} ctx={ctx} />
@@ -118,41 +119,52 @@ export function Ficha({
   return (
     <article>
       <header className="tramite-header">
-        <p className="small">
+        <p className="crumbs">
           <Link href={`/${locale}/tramites`}>{t.nav.tramites}</Link> › {t.categorias[tr.categoria]}
         </p>
         <h1>{tr.titulo}</h1>
         <p className="resumen">{tr.resumen_en_una_frase}</p>
         <p className="meta-line">
-          <span>
-            {t.common.ultimaVerificacion}: <time dateTime={tr.ultima_verificacion}>{formatFecha(tr.ultima_verificacion, locale)}</time>
-          </span>
           {tr.estado === "borrador" ? (
-            <span className="badge badge-warn">En revisión</span>
+            <span className="badge badge-warn">
+              <Icon name="alert" size={13} /> En revisión
+            </span>
           ) : (
-            <span className="badge badge-ok">Revisada</span>
+            <span className="badge badge-ok">
+              <Icon name="check" size={13} /> Revisada
+            </span>
           )}
+          <span>
+            <Icon name="clock" size={14} className="icon" /> {t.common.ultimaVerificacion}:{" "}
+            <time dateTime={tr.ultima_verificacion}>{formatFecha(tr.ultima_verificacion, locale)}</time>
+          </span>
+          <a href={tr.enlace_oficial.url} target="_blank" rel="noopener">
+            {t.common.fuenteOficial} <Icon name="external" size={13} className="icon" />
+          </a>
         </p>
       </header>
 
-      <Disclaimer locale={locale} t={t} ultimaVerificacion={tr.ultima_verificacion} fuenteOficial={tr.enlace_oficial} />
+      <Disclaimer locale={locale} t={t} compact ultimaVerificacion={tr.ultima_verificacion} fuenteOficial={tr.enlace_oficial} />
       {tr.estado === "borrador" && (
-        <div className="notice notice-warn">
+        <div className="notice notice-warn notice-slim">
+          <Icon name="alert" size={18} className="icon" />
           <p>{T.borrador}</p>
         </div>
       )}
       {vencida && (
-        <div className="notice notice-warn">
+        <div className="notice notice-warn notice-slim">
+          <Icon name="alert" size={18} className="icon" />
           <p>{T.revisionVencida}</p>
         </div>
       )}
       {!tr.traducido && (
-        <div className="notice">
+        <div className="notice notice-slim">
           <p>{T.traduccionPendiente}</p>
         </div>
       )}
 
-      <nav className="card toc no-print" aria-label="Índice">
+      <details className="toc-mobile no-print">
+        <summary>En esta guía</summary>
         <ol>
           {secciones
             .filter((s) => s.visible)
@@ -162,9 +174,10 @@ export function Ficha({
               </li>
             ))}
         </ol>
-      </nav>
+      </details>
 
-      <div className="readable">
+      <div className="ficha-layout">
+        <div className="ficha-body">
         {tr.cuerpoHtml.trim() && <div className="prose" dangerouslySetInnerHTML={{ __html: tr.cuerpoHtml }} />}
 
         <Seccion id="para-quien" titulo={T.paraQuien}>
@@ -192,7 +205,7 @@ export function Ficha({
         </Seccion>
 
         <Seccion id="requisitos" titulo={T.requisitos}>
-          <Lista items={tr.requisitos} ctx={ctx} />
+          <Lista items={tr.requisitos} ctx={ctx} className="reqs" />
         </Seccion>
 
         {tr.documentos.length > 0 && (
@@ -381,6 +394,20 @@ export function Ficha({
         <p className="notice no-print">
           <Link href={`/${locale}/reportar?pagina=${encodeURIComponent(tr.slug)}`}>{T.reportar}</Link>
         </p>
+        </div>
+
+        <aside className="toc-aside no-print" aria-label="Índice">
+          <h2>En esta guía</h2>
+          <ol>
+            {secciones
+              .filter((s) => s.visible)
+              .map((s) => (
+                <li key={s.id}>
+                  <a href={`#${s.id}`}>{s.titulo}</a>
+                </li>
+              ))}
+          </ol>
+        </aside>
       </div>
     </article>
   );

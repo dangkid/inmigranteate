@@ -3,10 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { Icon } from "./Icon";
 
 export interface NavItem {
   href: string;
   label: string;
+  /** Botón destacado (llamada a la acción) */
+  cta?: boolean;
 }
 
 export function Header({
@@ -32,7 +35,12 @@ export function Header({
         <div className="container">
           <div className="bar">
             <Link href={homeHref} className="logo" onClick={() => setOpen(false)}>
-              Inmigrante<span>ate</span>
+              <span className="logo-mark">
+                <Icon name="home" size={19} />
+              </span>
+              <span>
+                Inmigrante<span className="ate">ate</span>
+              </span>
             </Link>
             <button
               type="button"
@@ -41,7 +49,7 @@ export function Header({
               aria-controls="menu-principal"
               onClick={() => setOpen((o) => !o)}
             >
-              <span aria-hidden="true">☰</span> {menuLabel}
+              <Icon name="menu" size={20} /> {menuLabel}
             </button>
           </div>
           <nav id="menu-principal" className="main-nav" data-open={open} aria-label={menuLabel}>
@@ -50,7 +58,8 @@ export function Header({
                 <li key={it.href}>
                   <Link
                     href={it.href}
-                    aria-current={pathname === it.href || pathname.startsWith(`${it.href}/`) ? "page" : undefined}
+                    className={it.cta ? "nav-cta" : undefined}
+                    aria-current={!it.cta && (pathname === it.href || pathname.startsWith(`${it.href}/`)) ? "page" : undefined}
                     onClick={() => setOpen(false)}
                   >
                     {it.label}
