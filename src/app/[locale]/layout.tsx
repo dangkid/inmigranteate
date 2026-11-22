@@ -20,8 +20,8 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#0b5d6b" },
-    { media: "(prefers-color-scheme: dark)", color: "#0b2f36" },
+    { media: "(prefers-color-scheme: light)", color: "#fffaf2" },
+    { media: "(prefers-color-scheme: dark)", color: "#151a1f" },
   ],
 };
 

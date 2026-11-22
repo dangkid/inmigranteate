@@ -31,9 +31,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       <section className="hero">
         <div className="hero-inner">
           <div>
-            <span className="badge" style={{ background: "rgba(255,255,255,0.14)", color: "#fff" }}>
-              Gratis · Sin registro · Con fuentes oficiales
-            </span>
+            <span className="badge hero-badge">Gratis · Sin registro · Con fuentes oficiales</span>
             <h1>
               Haz tus trámites de extranjería <em>sin pagar</em> por lo que puedes hacer tú
             </h1>

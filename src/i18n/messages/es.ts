@@ -50,7 +50,7 @@ const es = {
       "Explicamos los trámites de extranjería en España paso a paso, en lenguaje claro y con enlaces a la fuente oficial de cada dato. Gratis, sin registro y sin guardar tus datos.",
     ctaAsistente: "Descubre qué trámite necesitas",
     ctaTramites: "Ver todos los trámites",
-    buscarPlaceholder: "Busca: arraigo, TIE, apostilla…",
+    buscarPlaceholder: "Busca: arraigo, TIE…",
     categorias: "Trámites por tema",
     novedades: "Últimos cambios en la normativa",
     herramientas: "Herramientas",
